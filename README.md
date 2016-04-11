@@ -9,6 +9,7 @@ Are you having trouble getting something to work? Consult the [troubleshooting g
 # Installation
 
 ```bash
+SOON AVALIABLE
 $ npm install mobile-enabled-background-video --save
 ```
 
