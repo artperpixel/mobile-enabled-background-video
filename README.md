@@ -19,6 +19,8 @@ Make sure to include it in <head>.
 * [mobile-enabled-background-video.min.js](https://raw.githubusercontent.com/artperpixel/mobile-enabled-background-video/master/dist/mobile-enabled-background-video.min.js)
 * [mobile-enabled-background-video.js](https://raw.githubusercontent.com/artperpixel/mobile-enabled-background-video/master/dist/mobile-enabled-background-video.js)
 
+* [mobile-enabled-background-video.css](https://raw.githubusercontent.com/artperpixel/mobile-enabled-background-video/master/dist/mobile-enabled-background-video.css)
+
 # Documentation
 
 ```bash
