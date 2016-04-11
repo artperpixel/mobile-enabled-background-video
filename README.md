@@ -14,7 +14,7 @@ $ npm install mobile-enabled-background-video --save
 ```
 
 Find `mobile-enabled-background-video.js` in the `dist/` directory.
-Make sure to include it in <head>.
+Make sure to include script end of <body>.
 
 * [mobile-enabled-background-video.min.js](https://raw.githubusercontent.com/artperpixel/mobile-enabled-background-video/master/dist/mobile-enabled-background-video.min.js)
 * [mobile-enabled-background-video.js](https://raw.githubusercontent.com/artperpixel/mobile-enabled-background-video/master/dist/mobile-enabled-background-video.js)
@@ -25,6 +25,7 @@ Make sure to include it in <head>.
 
 ```bash
   // EXAMPLE: If users device is IPHONE (Dont use this plugin for desktop)
+  // Call script at end of <body>
   if (navigator.userAgent.toLowerCase().indexOf('iphone') >= 0) {
     var video = new MobileVideoPlayer({
       videoTarget: 'video',
