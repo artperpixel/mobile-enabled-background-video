@@ -2,7 +2,7 @@
 
 A Javascript plugin for making videos inline background video for mobile.
 
-
+[DEMO: ](https://artperpixel.github.io/mobile-enabled-background-video/).
 
 Are you having trouble getting something to work? Consult the [troubleshooting guide](https://github.com/artperpixel/mobile-enabled-background-video/wiki/Troubleshooting).
 
@@ -25,7 +25,7 @@ Make sure to include script end of body.
 
 ```bash
   // Call script at end of body
-  
+
   // EXAMPLE: If users device is IPHONE (Dont use this plugin for desktop)
   if (navigator.userAgent.toLowerCase().indexOf('iphone') >= 0) {
     var video = new MobileVideoPlayer({
