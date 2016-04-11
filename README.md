@@ -39,6 +39,9 @@ Make sure to include it in <head>.
   }
 ```
 
+You can see example usage on this link
+* [Example usage](https://github.com/artperpixel/mobile-enabled-background-video/tree/master/site)
+
 # License
 
 MIT
