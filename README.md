@@ -15,10 +15,6 @@ $ npm install mobile-enabled-background-video --save
 Find `mobile-enabled-background-video.js` in the `dist/` directory.
 Make sure to include it in <head>.
 
-## Copying
-
-Include `mobile-enabled-background-video.js` after you've included jQuery on the page.
-
 * [mobile-enabled-background-video.min.js](https://raw.githubusercontent.com/artperpixel/mobile-enabled-background-video/master/dist/artperpixel/mobile-enabled-background-video.min.js)
 * [mobile-enabled-background-video.js](https://raw.githubusercontent.com/artperpixel/mobile-enabled-background-video/master/dist/artperpixel/mobile-enabled-background-video.js)
 
