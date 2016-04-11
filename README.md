@@ -33,7 +33,7 @@ Make sure to include it in <head>.
       framesPerSecond: 60,
     });
     // Play video when you want!
-    setInterval(function(){
+    setTimeout(function(){
       video.play();
     },1500);
   }
