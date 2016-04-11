@@ -1,17 +1,20 @@
-var mvpManager = {
+var cvpHandlers = {
+  canvasClickHandler: null,
   videoTimeUpdateHandler: null,
   videoCanPlayHandler: null,
   windowResizeHandler: null
 };
 
-var MobileVideoPlayer = function(options) {
+var CanvasVideoPlayer = function(options) {
   var i;
 
   this.options = {
     framesPerSecond: 25,
+    hideVideo: true,
     autoplay: false,
     audio: false,
-    loop: true
+    timelineSelector: false,
+    resetOnLastFrame: true
   };
 
   for (i in options) {
@@ -20,20 +23,32 @@ var MobileVideoPlayer = function(options) {
 
   this.video = document.querySelectorAll(this.options.videoSelector)[0];
   this.canvas = document.querySelectorAll(this.options.canvasSelector)[0];
+  this.timeline = document.querySelectorAll(this.options.timelineSelector)[0];
+  this.timelinePassed = document.querySelectorAll(this.options.timelineSelector + '> div')[0];
 
   if (!this.options.videoSelector || !this.video) {
-    console.error('Please use "videoTarget" property.');
+    console.error('No "videoSelector" property, or the element is not found');
     return;
   }
 
   if (!this.options.canvasSelector || !this.canvas) {
-    console.error('Please use "canvasTarget" property.');
+    console.error('No "canvasSelector" property, or the element is not found');
     return;
   }
 
+  if (this.options.timelineSelector && !this.timeline) {
+    console.error('Element for the "timelineSelector" selector not found');
+    return;
+  }
+
+  if (this.options.timelineSelector && !this.timelinePassed) {
+    console.error('Element for the "timelinePassed" not found');
+    return;
+  }
 
   if (this.options.audio) {
     if (typeof(this.options.audio) === 'string'){
+      // Use audio selector from options if specified
       this.audio = document.querySelectorAll(this.options.audio)[0];
 
       if (!this.audio) {
@@ -41,6 +56,7 @@ var MobileVideoPlayer = function(options) {
         return;
       }
     } else {
+      // Creates audio element which uses same video sources
       this.audio = document.createElement('audio');
       this.audio.innerHTML = this.video.innerHTML;
       this.video.parentNode.insertBefore(this.audio, this.video);
@@ -49,6 +65,8 @@ var MobileVideoPlayer = function(options) {
 
     var iOS = /iPad|iPhone|iPod/.test(navigator.platform);
     if (iOS) {
+      // Autoplay doesn't work with audio on iOS
+      // User have to manually start the audio
       this.options.autoplay = false;
     }
   }
@@ -65,13 +83,18 @@ var MobileVideoPlayer = function(options) {
   this.bind();
 };
 
-MobileVideoPlayer.prototype.init = function() {
+CanvasVideoPlayer.prototype.init = function() {
   this.video.load();
 
   this.setCanvasSize();
+
+  if (this.options.hideVideo) {
+    this.video.style.display = 'none';
+  }
 };
 
-MobileVideoPlayer.prototype.getOffset = function(elem) {
+// Used most of the jQuery code for the .offset() method
+CanvasVideoPlayer.prototype.getOffset = function(elem) {
   var docElem, rect, doc;
 
   if (!elem) {
@@ -80,6 +103,7 @@ MobileVideoPlayer.prototype.getOffset = function(elem) {
 
   rect = elem.getBoundingClientRect();
 
+  // Make sure element is not hidden (display: none) or disconnected
   if (rect.width || rect.height || elem.getClientRects().length) {
     doc = elem.ownerDocument;
     docElem = doc.documentElement;
@@ -91,7 +115,7 @@ MobileVideoPlayer.prototype.getOffset = function(elem) {
   }
 };
 
-MobileVideoPlayer.prototype.jumpTo = function(percentage) {
+CanvasVideoPlayer.prototype.jumpTo = function(percentage) {
   this.video.currentTime = this.video.duration * percentage;
 
   if (this.options.audio) {
@@ -99,19 +123,28 @@ MobileVideoPlayer.prototype.jumpTo = function(percentage) {
   }
 };
 
-MobileVideoPlayer.prototype.bind = function() {
+CanvasVideoPlayer.prototype.bind = function() {
   var self = this;
 
-  // Interval shot
-  this.video.addEventListener('timeupdate', mvpManager.videoTimeUpdateHandler = function() {
+  // Playes or pauses video on canvas click
+  this.canvas.addEventListener('click', cvpHandlers.canvasClickHandler = function() {
+    self.playPause();
+  });
+
+  // On every time update draws frame
+  this.video.addEventListener('timeupdate', cvpHandlers.videoTimeUpdateHandler = function() {
+    self.drawFrame();
+    if (self.options.timelineSelector) {
+      self.updateTimeline();
+    }
+  });
+
+  // Draws first frame
+  this.video.addEventListener('canplay', cvpHandlers.videoCanPlayHandler = function() {
     self.drawFrame();
   });
 
-  // Show first shot
-  this.video.addEventListener('canplay', mvpManager.videoCanPlayHandler = function() {
-    self.drawFrame();
-  });
-
+  // To be sure 'canplay' event that isn't already fired
   if (this.video.readyState >= 2) {
     self.drawFrame();
   }
@@ -121,8 +154,17 @@ MobileVideoPlayer.prototype.bind = function() {
     self.play();
   }
 
+  // Click on the video seek video
+  if (self.options.timelineSelector) {
+    this.timeline.addEventListener('click', function(e) {
+      var offset = e.clientX - self.getOffset(self.canvas).left;
+      var percentage = offset / self.timeline.offsetWidth;
+      self.jumpTo(percentage);
+    });
+  }
 
-  window.addEventListener('resize', mvpManager.windowResizeHandler = function() {
+  // Cache canvas size on resize (doing it only once in a second)
+  window.addEventListener('resize', cvpHandlers.windowResizeHandler = function() {
     clearTimeout(self.resizeTimeoutReference);
 
     self.resizeTimeoutReference = setTimeout(function() {
@@ -132,8 +174,10 @@ MobileVideoPlayer.prototype.bind = function() {
   });
 
   this.unbind = function() {
-    this.video.removeEventListener('canplay', mvpManager.videoCanPlayHandler);
-    window.removeEventListener('resize', mvpManager.windowResizeHandler);
+    this.canvas.removeEventListener('click', cvpHandlers.canvasClickHandler);
+    this.video.removeEventListener('timeupdate', cvpHandlers.videoTimeUpdateHandler);
+    this.video.removeEventListener('canplay', cvpHandlers.videoCanPlayHandler);
+    window.removeEventListener('resize', cvpHandlers.windowResizeHandler);
 
     if (this.options.audio) {
       this.audio.parentNode.removeChild(this.audio);
@@ -141,7 +185,12 @@ MobileVideoPlayer.prototype.bind = function() {
   };
 };
 
-MobileVideoPlayer.prototype.setCanvasSize = function() {
+CanvasVideoPlayer.prototype.updateTimeline = function() {
+  var percentage = (this.video.currentTime * 100 / this.video.duration).toFixed(2);
+  this.timelinePassed.style.width = percentage + '%';
+};
+
+CanvasVideoPlayer.prototype.setCanvasSize = function() {
   this.width = this.canvas.clientWidth;
   this.height = this.canvas.clientHeight;
 
@@ -149,19 +198,27 @@ MobileVideoPlayer.prototype.setCanvasSize = function() {
   this.canvas.setAttribute('height', this.height);
 };
 
-MobileVideoPlayer.prototype.play = function() {
+CanvasVideoPlayer.prototype.play = function() {
   this.lastTime = Date.now();
   this.playing = true;
   this.loop();
 
-  // Sync again audio and video
   if (this.options.audio) {
+    // Resync audio and video
     this.audio.currentTime = this.video.currentTime;
     this.audio.play();
   }
 };
 
-MobileVideoPlayer.prototype.playPause = function() {
+CanvasVideoPlayer.prototype.pause = function() {
+  this.playing = false;
+
+  if (this.options.audio) {
+    this.audio.pause();
+  }
+};
+
+CanvasVideoPlayer.prototype.playPause = function() {
   if (this.playing) {
     this.pause();
   }
@@ -170,34 +227,27 @@ MobileVideoPlayer.prototype.playPause = function() {
   }
 };
 
-MobileVideoPlayer.prototype.pause = function() {
-  this.playing = false;
-
-  if (this.options.audio) {
-    this.audio.pause();
-  }
-};
-
-
-MobileVideoPlayer.prototype.loop = function() {
+CanvasVideoPlayer.prototype.loop = function() {
   var self = this;
 
   var time = Date.now();
   var elapsed = (time - this.lastTime) / 1000;
 
+  // Render
   if(elapsed >= (1 / this.options.framesPerSecond)) {
     this.video.currentTime = this.video.currentTime + elapsed;
     this.lastTime = time;
+    // Resync audio and video if they drift more than 300ms apart
     if(this.audio && Math.abs(this.audio.currentTime - this.video.currentTime) > .3){
       this.audio.currentTime = this.video.currentTime;
     }
   }
 
-  // If loop false stop video on end
+  // If we are at the end of the video stop
   if (this.video.currentTime >= this.video.duration) {
     this.playing = false;
 
-    if (this.options.loop === true) {
+    if (this.options.resetOnLastFrame === true) {
       this.video.currentTime = 0;
       self.play();
     }
@@ -213,6 +263,6 @@ MobileVideoPlayer.prototype.loop = function() {
   }
 };
 
-MobileVideoPlayer.prototype.drawFrame = function() {
+CanvasVideoPlayer.prototype.drawFrame = function() {
   this.ctx.drawImage(this.video, 0, 0, this.width, this.height);
 };

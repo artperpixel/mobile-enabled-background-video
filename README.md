@@ -1,4 +1,4 @@
-# mobile-enabled-background-video
+# Mobile enabled background video plugin
 
 A Javascript plugin for making videos inline background video for mobile.
 
