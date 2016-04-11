@@ -24,8 +24,9 @@ Make sure to include script end of body.
 # Documentation
 
 ```bash
-  // EXAMPLE: If users device is IPHONE (Dont use this plugin for desktop)
   // Call script at end of body
+  
+  // EXAMPLE: If users device is IPHONE (Dont use this plugin for desktop)
   if (navigator.userAgent.toLowerCase().indexOf('iphone') >= 0) {
     var video = new MobileVideoPlayer({
       videoTarget: 'video',
