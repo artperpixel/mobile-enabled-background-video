@@ -21,7 +21,21 @@ Make sure to include it in <head>.
 
 # Documentation
 
-SOON
+```bash
+  // EXAMPLE: If users device is IPHONE (Dont use this plugin for desktop)
+  if (navigator.userAgent.toLowerCase().indexOf('iphone') >= 0) {
+    var video = new MobileVideoPlayer({
+      videoTarget: 'video',
+      canvasTarget: 'canvas',
+      loop: true,
+      framesPerSecond: 60,
+    });
+    // Play video when you want!
+    setInterval(function(){
+      video.play();
+    },1500);
+  }
+```
 
 # License
 

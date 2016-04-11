@@ -18,15 +18,15 @@ var MobileVideoPlayer = function(options) {
     this.options[i] = options[i];
   }
 
-  this.video = document.querySelectorAll(this.options.videoSelector)[0];
-  this.canvas = document.querySelectorAll(this.options.canvasSelector)[0];
+  this.video = document.querySelectorAll(this.options.videoTarget)[0];
+  this.canvas = document.querySelectorAll(this.options.canvasTarget)[0];
 
-  if (!this.options.videoSelector || !this.video) {
+  if (!this.options.videoTarget || !this.video) {
     console.error('Please use "videoTarget" property.');
     return;
   }
 
-  if (!this.options.canvasSelector || !this.canvas) {
+  if (!this.options.canvasTarget || !this.canvas) {
     console.error('Please use "canvasTarget" property.');
     return;
   }
@@ -152,7 +152,6 @@ MobileVideoPlayer.prototype.setCanvasSize = function() {
 MobileVideoPlayer.prototype.play = function() {
   this.lastTime = Date.now();
   this.playing = true;
-  this.loop();
 
   // Sync again audio and video
   if (this.options.audio) {
