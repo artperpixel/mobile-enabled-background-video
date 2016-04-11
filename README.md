@@ -19,8 +19,8 @@ Make sure to include it in <head>.
 
 Include `mobile-enabled-background-video.js` after you've included jQuery on the page.
 
-* [sticky-kit.min.js](https://raw.githubusercontent.com/artperpixel/mobile-enabled-background-video/master/dist/artperpixel/mobile-enabled-background-video.min.js)
-* [sticky-kit.js](https://raw.githubusercontent.com/artperpixel/mobile-enabled-background-video/master/dist/artperpixel/mobile-enabled-background-video.js)
+* [mobile-enabled-background-video.min.js](https://raw.githubusercontent.com/artperpixel/mobile-enabled-background-video/master/dist/artperpixel/mobile-enabled-background-video.min.js)
+* [mobile-enabled-background-video.js](https://raw.githubusercontent.com/artperpixel/mobile-enabled-background-video/master/dist/artperpixel/mobile-enabled-background-video.js)
 
 # Documentation
 
