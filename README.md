@@ -2,7 +2,7 @@
 
 A Javascript plugin for making videos inline background video for mobile.
 
-[DEMO: ](https://artperpixel.github.io/mobile-enabled-background-video/).
+[CLICK FOR DEMO](https://artperpixel.github.io/mobile-enabled-background-video/).
 
 Are you having trouble getting something to work? Consult the [troubleshooting guide](https://github.com/artperpixel/mobile-enabled-background-video/wiki/Troubleshooting).
 
