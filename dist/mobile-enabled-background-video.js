@@ -68,6 +68,7 @@ var MobileVideoPlayer = function(options) {
 MobileVideoPlayer.prototype.init = function() {
   this.video.load();
 
+
   this.setCanvasSize();
 };
 
@@ -152,6 +153,7 @@ MobileVideoPlayer.prototype.setCanvasSize = function() {
 MobileVideoPlayer.prototype.play = function() {
   this.lastTime = Date.now();
   this.playing = true;
+  this.loop();
 
   // Sync again audio and video
   if (this.options.audio) {
