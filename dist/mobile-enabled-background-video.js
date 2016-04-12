@@ -1,3 +1,12 @@
+/**
+ * Copyright (c) 2015-present, ArtPerPixel Digital Solutions
+ * Http://www.artperpixel.com
+ * All rights reserved.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
 var mvpManager = {
   videoTimeUpdateHandler: null,
   videoCanPlayHandler: null,
@@ -67,6 +76,7 @@ var MobileVideoPlayer = function(options) {
 
 MobileVideoPlayer.prototype.init = function() {
   this.video.load();
+
 
   this.setCanvasSize();
 };
@@ -152,6 +162,7 @@ MobileVideoPlayer.prototype.setCanvasSize = function() {
 MobileVideoPlayer.prototype.play = function() {
   this.lastTime = Date.now();
   this.playing = true;
+  this.loop();
 
   // Sync again audio and video
   if (this.options.audio) {
@@ -198,7 +209,7 @@ MobileVideoPlayer.prototype.loop = function() {
 
     if (this.options.loop === true) {
       this.video.currentTime = 0;
-      self.play();
+      self.loop();
     }
   }
 

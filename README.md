@@ -32,7 +32,7 @@ Make sure to include script end of body.
       videoTarget: 'video',
       canvasTarget: 'canvas',
       loop: true,
-      framesPerSecond: 60,
+      framesPerSecond: 25,
     });
     // Play video when you want!
     setTimeout(function(){
