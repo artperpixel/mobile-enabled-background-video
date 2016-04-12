@@ -16,8 +16,7 @@ Are you having trouble getting something to work? Consult the [troubleshooting g
 SOON AVALIABLE
 $ npm install mobile-enabled-background-video --save
 ```
-⋅⋅⋅⋅
-**Method 2:**
+⋅⋅**Method 2:**
 
 Find `mobile-enabled-background-video.js` in the `dist/` directory.
 Make sure to include script end of body.
