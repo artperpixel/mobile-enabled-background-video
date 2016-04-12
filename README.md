@@ -26,7 +26,7 @@ Make sure to include script end of body.
 
 * [mobile-enabled-background-video.css](https://raw.githubusercontent.com/artperpixel/mobile-enabled-background-video/master/dist/mobile-enabled-background-video.css)
 
-# Documentation
+# Usage
 
 ```bash
   // Call script at end of body
