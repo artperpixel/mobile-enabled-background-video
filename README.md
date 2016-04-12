@@ -1,6 +1,6 @@
 # Mobile enabled background video plugin
 [![Total download](https://img.shields.io/github/downloads/artperpixel/mobile-enabled-background-video/total.svg)]()
-[![Licence](https://img.shields.io/github/license/mashape/apistatus.svg)]()
+[![License](https://img.shields.io/github/license/mashape/apistatus.svg)]()
 
 A Javascript plugin for making videos inline background video for mobile.
 
