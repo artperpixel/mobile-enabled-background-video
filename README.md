@@ -10,10 +10,9 @@ Are you having trouble getting something to work? Consult the [troubleshooting g
 
 # Installation
 
-**Method 1:**
+**Method 1:** (SOON)
 
 ```bash
-SOON AVALIABLE
 $ npm install mobile-enabled-background-video --save
 ```
 
