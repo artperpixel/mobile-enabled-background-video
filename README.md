@@ -1,4 +1,5 @@
 # Mobile enabled background video plugin
+[![Total download](https://img.shields.io/github/downloads/atom/atom/total.svg)]()
 
 A Javascript plugin for making videos inline background video for mobile.
 
