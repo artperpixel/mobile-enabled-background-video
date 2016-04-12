@@ -154,7 +154,6 @@ MobileVideoPlayer.prototype.play = function() {
   this.lastTime = Date.now();
   this.playing = true;
   this.loop();
-  
 
   // Sync again audio and video
   if (this.options.audio) {
@@ -201,7 +200,7 @@ MobileVideoPlayer.prototype.loop = function() {
 
     if (this.options.loop === true) {
       this.video.currentTime = 0;
-      self.play();
+      self.loop();
     }
   }
 
