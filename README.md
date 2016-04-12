@@ -48,4 +48,4 @@ You can see example usage on this link
 
 # License
 
-MIT
+[MIT](https://github.com/artperpixel/mobile-enabled-background-video/blob/master/LICENSE)
