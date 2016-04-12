@@ -25,14 +25,14 @@ Make sure to include script end of body.
 
 ```bash
   // Call script at end of body
-  
+
   // EXAMPLE: If users device is IPHONE (Dont use this plugin for desktop)
   if (navigator.userAgent.toLowerCase().indexOf('iphone') >= 0) {
     var video = new MobileVideoPlayer({
       videoTarget: 'video',
       canvasTarget: 'canvas',
       loop: true,
-      framesPerSecond: 60,
+      framesPerSecond: 25,
     });
     // Play video when you want!
     setTimeout(function(){
